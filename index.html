@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSPIDER.CO</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--red:#D90429;--red2:#FF1744;--black:#060608;--white:#F2F2F0;--muted:rgba(242,242,240,0.45);--line:rgba(242,242,240,0.07)}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;overflow-x:hidden;min-height:100vh}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 52px;height:70px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(6,6,8,0.98) 0%,transparent 100%)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.35rem;letter-spacing:6px;color:var(--white);text-decoration:none}
+.logo em{color:var(--red);font-style:normal}
+.nav-btn{background:var(--red);color:var(--white);border:none;padding:11px 26px;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s}
+.nav-btn:hover{background:var(--red2)}
+
+/* HERO - full viewport */
+.hero{position:relative;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center;background:#060608}
+
+/* Spider image — right side, large */
+.spider{position:absolute;right:0;top:0;height:100%;width:58%;object-fit:cover;object-position:center center;z-index:1}
+
+/* Glow behind spider */
+.glow{position:absolute;right:15%;top:50%;transform:translateY(-50%);width:55vw;height:80vh;background:radial-gradient(ellipse,rgba(217,4,41,0.15) 0%,transparent 65%);z-index:0;pointer-events:none;animation:gp 5s ease-in-out infinite}
+@keyframes gp{0%,100%{opacity:.6}50%{opacity:1}}
+
+/* Fade — left gradient so text is readable, right edge fade into black */
+.fade{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(to right,#060608 0%,rgba(6,6,8,.9) 32%,rgba(6,6,8,.15) 52%,rgba(6,6,8,.3) 72%,#060608 100%),
+    linear-gradient(to bottom,rgba(6,6,8,.5) 0%,transparent 12%,transparent 85%,#060608 100%)}
+
+/* Content — left side */
+.content{position:relative;z-index:3;padding:0 0 0 52px;width:50%;max-width:560px}
+
+.eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:5px;color:var(--red);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;opacity:0;animation:fu .7s .3s both}
+.eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--red)}
+
+.title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(3.8rem,5.8vw,6.5rem);line-height:.88;letter-spacing:-1px;text-transform:uppercase;margin-bottom:22px;opacity:0;animation:fu .8s .45s both}
+.title .ol{-webkit-text-stroke:1.5px var(--white);color:transparent}
+.title .r{color:var(--red)}
+
+.sub{font-size:.97rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:360px;margin-bottom:34px;opacity:0;animation:fu .8s .6s both}
+.sub strong{color:rgba(242,242,240,.88);font-weight:500}
+
+/* Email form */
+.form{display:flex;max-width:410px;margin-bottom:10px;opacity:0;animation:fu .8s .75s both}
+.form input{flex:1;background:rgba(242,242,240,.07);border:1px solid rgba(242,242,240,.16);border-right:none;color:var(--white);padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;border-radius:2px 0 0 2px;transition:border-color .3s}
+.form input:focus{border-color:rgba(217,4,41,.65)}
+.form input::placeholder{color:rgba(242,242,240,.28)}
+.form button{background:var(--red);color:var(--white);border:none;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:0 2px 2px 0;white-space:nowrap;transition:background .2s}
+.form button:hover{background:var(--red2)}
+.note{font-size:.67rem;color:rgba(242,242,240,.2);letter-spacing:1px;opacity:0;animation:fu .8s .9s both}
+.success{display:none;font-family:'Barlow Condensed',sans-serif;font-size:1.25rem;font-weight:700;letter-spacing:4px;color:var(--red);margin-top:14px}
+
+/* Side label */
+.side-label{position:absolute;right:44px;bottom:32px;z-index:3;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.58rem;letter-spacing:3px;color:rgba(242,242,240,.12);writing-mode:vertical-rl;opacity:0;animation:fu .8s 1s both}
+
+/* Animations */
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---- TABLET (iPad portrait ~768-1024px) ---- */
+@media(max-width:1024px) and (min-width:769px){
+  .content{width:55%;padding-left:36px}
+  .spider{width:52%;object-position:center top}
+  .title{font-size:clamp(3.2rem,5vw,5rem)}
+}
+
+/* ---- MOBILE (iPhone, max 768px) ---- */
+@media(max-width:768px){
+  nav{padding:0 20px;height:60px}
+  .nav-btn{padding:9px 18px;font-size:.82rem;letter-spacing:2px}
+
+  .hero{align-items:flex-start}
+
+  /* Spider full screen as background */
+  .spider{width:100%;height:70%;top:auto;bottom:0;object-position:center top;opacity:.28;z-index:1}
+
+  /* Stronger fade on mobile */
+  .fade{background:
+    linear-gradient(180deg,rgba(6,6,8,.65) 0%,rgba(6,6,8,.1) 35%,rgba(6,6,8,.55) 75%,#060608 100%)}
+
+  .content{width:100%;max-width:100%;padding:82px 22px 0}
+  .title{font-size:clamp(2.8rem,12vw,4rem);margin-bottom:16px}
+  .sub{font-size:.88rem;margin-bottom:26px;max-width:100%}
+
+  /* Stacked form */
+  .form{flex-direction:column;max-width:100%;margin-bottom:10px}
+  .form input{border-right:1px solid rgba(242,242,240,.16);border-bottom:none;border-radius:2px 2px 0 0;padding:14px 16px}
+  .form button{border-radius:0 0 2px 2px;padding:14px}
+
+  .side-label{display:none}
+  .glow{display:none}
+
+  .eyebrow{font-size:.65rem}
+}
+
+/* ---- Small iPhone (max 390px) ---- */
+@media(max-width:390px){
+  .title{font-size:2.6rem}
+  .content{padding:76px 18px 0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">X<em>SPIDER</em>.CO</a>
+  <button class="nav-btn" onclick="document.querySelector('.form input').focus()">UNIRME &rarr;</button>
+</nav>
+
+<section class="hero">
+  <div class="glow"></div>
+  <img src="spider2.png" alt="xspider" class="spider" onerror="this.style.opacity='0'">
+  <div class="fade"></div>
+
+  <div class="content">
+    <p class="eyebrow">Newsletter de emprendimiento</p>
+    <h1 class="title">
+      NADIE<br>
+      <span class="ol">SABE</span><br>
+      <span class="r">QUIEN SOY.</span><br>
+      Y ESO<br>
+      <span class="ol">ES EL</span><br>
+      <span class="r">PODER.</span>
+    </h1>
+    <p class="sub">Cada semana comparto <strong>lo que nadie te dice</strong> sobre construir un negocio desde cero. Sin cara. Sin filtros. Solo estrategia real.</p>
+    <div class="form" id="hform">
+      <input type="email" id="hemail" placeholder="tu@email.com">
+      <button onclick="sub()">ENTRAR &rarr;</button>
+    </div>
+    <p class="note">Zero spam &middot; Solo valor &middot; Sal cuando quieras</p>
+    <p class="success" id="hsuc">BIENVENIDO A LA RED.</p>
+  </div>
+
+  <div class="side-label">XSPIDER.CO &mdash; BUILD IN THE DARK</div>
+</section>
+
+<script>
+function sub(){
+  var i=document.getElementById('hemail'),s=document.getElementById('hsuc'),f=document.getElementById('hform');
+  if(!i.value.trim()||i.value.indexOf('@')===-1){
+    i.style.borderColor='rgba(217,4,41,.8)';i.placeholder='email valido, por favor';
+    setTimeout(function(){i.style.borderColor='rgba(242,242,240,.16)';i.placeholder='tu@email.com';},2500);
+    return;
+  }
+  f.style.transition='all .4s';f.style.opacity='0';f.style.transform='translateY(-8px)';
+  setTimeout(function(){f.style.display='none';s.style.display='block';},400);
+}
+document.getElementById('hemail').addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+</script>
+</body>
+</html>
