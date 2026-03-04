@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XSPIDER.CO — Build in the Dark</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --red: #D90429;
+  --red2: #FF1744;
+  --black: #060608;
+  --white: #F2F2F0;
+  --muted: rgba(242,242,240,0.42);
+  --line: rgba(242,242,240,0.07);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--black); color: var(--white); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+
+
+
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 52px; height:72px; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(to bottom,rgba(6,6,8,0.96) 0%,transparent 100%); }
+.nav-logo { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.45rem; letter-spacing:6px; color:var(--white); text-decoration:none; }
+.nav-logo em { color:var(--red); font-style:normal; }
+.nav-right { display:flex; align-items:center; gap:32px; }
+.nav-link { font-size:0.72rem; letter-spacing:2px; color:var(--muted); text-decoration:none; text-transform:uppercase; transition:color 0.2s; }
+.nav-link:hover { color:var(--white); }
+.nav-btn { background:var(--red); color:var(--white); border:none; padding:10px 24px; font-family:'Barlow Condensed',sans-serif; font-size:0.9rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; border-radius:2px; transition:background 0.2s,transform 0.12s; }
+.nav-btn:hover { background:var(--red2); transform:scale(1.03); }
+
+.hero { position:relative; width:100vw; height:100vh; overflow:hidden; display:flex; align-items:center; background:#060608; }
+.hero-glow { position:absolute; right:5%; bottom:0; width:580px; height:580px; background:radial-gradient(circle,rgba(217,4,41,0.2) 0%,transparent 70%); z-index:1; pointer-events:none; animation:glowpulse 4s ease-in-out infinite; }
+@keyframes glowpulse { 0%,100%{opacity:0.7;transform:scale(1);} 50%{opacity:1;transform:scale(1.07);} }
+
+.hero-spider { position:absolute; right:0; bottom:0; height:96%; width:auto; object-fit:contain; object-position:bottom right; z-index:3; filter:contrast(1.05); animation:spiderIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+@keyframes spiderIn { from{opacity:0;transform:translateX(60px);} to{opacity:1;transform:translateX(0);} }
+
+.hero-fade { position:absolute; inset:0; z-index:4; pointer-events:none; background:linear-gradient(to right,#060608 0%,rgba(6,6,8,0.88) 30%,rgba(6,6,8,0.08) 58%,rgba(6,6,8,0.55) 82%,#060608 100%),linear-gradient(to top,#060608 0%,transparent 20%); }
+
+.hero-content { position:relative; z-index:6; padding:0 0 0 52px; max-width:620px; }
+.hero-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:5px; color:var(--red); text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp 0.7s 0.4s both; }
+.hero-eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--red); }
+
+.hero-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(4rem,7vw,7rem); line-height:0.88; letter-spacing:-1px; text-transform:uppercase; margin-bottom:28px; opacity:0; animation:fadeUp 0.8s 0.55s both; }
+.hero-title .ol { -webkit-text-stroke:1.5px var(--white); color:transparent; }
+.hero-title .red { color:var(--red); }
+
+.hero-sub { font-size:1.02rem; font-weight:300; color:var(--muted); line-height:1.78; max-width:400px; margin-bottom:42px; opacity:0; animation:fadeUp 0.8s 0.7s both; }
+.hero-sub strong { color:rgba(242,242,240,0.85); font-weight:500; }
+
+.hero-form { display:flex; max-width:450px; margin-bottom:14px; opacity:0; animation:fadeUp 0.8s 0.85s both; }
+.hero-form input { flex:1; background:rgba(242,242,240,0.06); border:1px solid rgba(242,242,240,0.14); border-right:none; color:var(--white); padding:15px 20px; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; border-radius:2px 0 0 2px; transition:border-color 0.3s,background 0.3s; }
+.hero-form input:focus { border-color:rgba(217,4,41,0.6); background:rgba(242,242,240,0.09); }
+.hero-form input::placeholder { color:rgba(242,242,240,0.28); }
+.hero-form button { background:var(--red); color:var(--white); border:none; padding:15px 28px; font-family:'Barlow Condensed',sans-serif; font-size:1rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; cursor:pointer; border-radius:0 2px 2px 0; transition:background 0.2s,transform 0.1s; white-space:nowrap; }
+.hero-form button:hover { background:var(--red2); }
+.hero-form button:active { transform:scale(0.97); }
+
+.form-note { font-size:0.7rem; color:rgba(242,242,240,0.22); letter-spacing:1px; opacity:0; animation:fadeUp 0.8s 1s both; }
+.hero-success { display:none; font-family:'Barlow Condensed',sans-serif; font-size:1.35rem; font-weight:700; letter-spacing:4px; color:var(--red); margin-top:14px; }
+
+.scroll-hint { position:absolute; bottom:34px; left:52px; z-index:6; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp 0.8s 1.2s both; }
+.scroll-hint span { font-size:0.58rem; letter-spacing:3px; color:rgba(242,242,240,0.22); text-transform:uppercase; }
+.sh-line { width:44px; height:1px; background:linear-gradient(to right,rgba(242,242,240,0.22),transparent); }
+
+.hero-num { position:absolute; right:48px; bottom:34px; z-index:6; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.62rem; letter-spacing:3px; color:rgba(242,242,240,0.15); writing-mode:vertical-rl; opacity:0; animation:fadeUp 0.8s 1.1s both; }
+
+.marquee { border-top:1px solid var(--line); border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap; background:var(--red); padding:16px 0; }
+.mtrack { display:inline-flex; animation:mq 22s linear infinite; }
+.mtrack span { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:0.9rem; letter-spacing:6px; text-transform:uppercase; padding:0 38px; color:rgba(255,255,255,0.92); }
+.mtrack .dot { padding:0 8px; opacity:0.45; }
+@keyframes mq { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+.s-manifesto { position:relative; padding:140px 52px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; max-width:1200px; margin:0 auto; }
+.manifesto-tag { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.68rem; letter-spacing:5px; color:var(--red); text-transform:uppercase; margin-bottom:24px; display:block; }
+.manifesto-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(2.8rem,4.5vw,4.2rem); line-height:0.88; text-transform:uppercase; margin-bottom:28px; }
+.manifesto-title .red { color:var(--red); }
+.manifesto-body { font-size:0.95rem; color:var(--muted); line-height:1.85; margin-bottom:32px; }
+.manifesto-body strong { color:rgba(242,242,240,0.82); font-weight:500; }
+.manifesto-quote { border-left:2px solid var(--red); padding:16px 24px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:1px; color:rgba(242,242,240,0.72); background:rgba(217,4,41,0.06); }
+
+.manifesto-img-wrap { position:relative; aspect-ratio:3/4; overflow:hidden; border:1px solid var(--line); }
+.manifesto-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center top; filter:contrast(1.08) saturate(0.88); }
+.manifesto-img-wrap::after { content:''; position:absolute; inset:0; background:linear-gradient(to top,var(--black) 0%,transparent 45%); }
+.manifesto-badge { position:absolute; bottom:-16px; left:-16px; z-index:2; width:86px; height:86px; background:var(--red); border:3px solid var(--black); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:0.68rem; letter-spacing:2px; text-align:center; line-height:1.3; animation:spin 14s linear infinite; }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+.s-pillars { border-top:1px solid var(--line); padding-bottom:120px; }
+.pillars-head { padding:80px 52px 60px; display:flex; align-items:flex-end; justify-content:space-between; }
+.pillars-head-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(2rem,3.5vw,3rem); letter-spacing:1px; text-transform:uppercase; }
+.pillars-head-sub { font-size:0.85rem; color:var(--muted); max-width:280px; text-align:right; line-height:1.65; }
+.pgrid { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid var(--line); }
+.pillar { padding:56px 46px 64px; border-right:1px solid var(--line); position:relative; overflow:hidden; transition:background 0.35s; opacity:0; transform:translateY(24px); }
+.pillar:last-child { border-right:none; }
+.pillar:hover { background:rgba(217,4,41,0.04); }
+.pillar::before { content:''; position:absolute; top:0;left:0;right:0; height:2px; background:var(--red); transform:scaleX(0); transform-origin:left; transition:transform 0.5s cubic-bezier(0.16,1,0.3,1); }
+.pillar:hover::before { transform:scaleX(1); }
+.pn { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:5.5rem; color:rgba(242,242,240,0.03); position:absolute; top:10px; right:22px; line-height:1; }
+.pi { font-size:1.6rem; margin-bottom:20px; }
+.pt { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.4rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.pb { font-size:0.84rem; line-height:1.82; color:var(--muted); }
+
+.s-cta { position:relative; overflow:hidden; padding:140px 52px; background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(217,4,41,0.08) 0%,transparent 70%); border-top:1px solid var(--line); text-align:center; }
+.cta-tag { font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:0.68rem; letter-spacing:5px; color:var(--red); text-transform:uppercase; margin-bottom:24px; display:block; }
+.cta-title { font-family:'Barlow Condensed',sans-serif; font-weight:900; font-size:clamp(3rem,6vw,5.5rem); line-height:0.88; text-transform:uppercase; margin-bottom:20px; }
+.cta-title .red { color:var(--red); }
+.cta-sub { font-size:1rem; color:var(--muted); margin-bottom:50px; line-height:1.7; }
+.cta-form { display:flex; max-width:490px; margin:0 auto 14px; }
+.cta-form input { flex:1; background:rgba(242,242,240,0.06); border:1px solid rgba(242,242,240,0.14); border-right:none; color:var(--white); padding:16px 22px; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; border-radius:2px 0 0 2px; transition:border-color 0.3s; }
+.cta-form input:focus { border-color:rgba(217,4,41,0.5); }
+.cta-form input::placeholder { color:rgba(242,242,240,0.25); }
+.cta-form button { background:var(--red); color:var(--white); border:none; padding:16px 28px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1rem; letter-spacing:3px; text-transform:uppercase; cursor:pointer; border-radius:0 2px 2px 0; transition:background 0.2s; }
+.cta-form button:hover { background:var(--red2); }
+.cta-note { font-size:0.68rem; color:rgba(242,242,240,0.18); letter-spacing:1px; }
+.cta-success { display:none; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:1.4rem; letter-spacing:4px; color:var(--red); margin-top:20px; }
+
+.wd { position:absolute; opacity:0.05; pointer-events:none; }
+.wd-tl { top:-60px; left:-60px; width:400px; height:400px; }
+.wd-br { bottom:-60px; right:-60px; width:400px; height:400px; transform:rotate(180deg); }
+
+footer { padding:44px 52px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line); background:var(--black); }
+.flogo { font-family:'Barlow Condensed',sans-serif; font-weight:800; font-size:1.35rem; letter-spacing:6px; color:var(--white); text-decoration:none; }
+.flogo em { color:var(--red); font-style:normal; }
+.fcopy { font-size:0.62rem; color:rgba(242,242,240,0.14); letter-spacing:2px; text-align:center; line-height:1.8; }
+.fig { font-size:0.68rem; letter-spacing:2px; color:rgba(242,242,240,0.35); text-decoration:none; transition:color 0.25s; }
+.fig:hover { color:var(--red); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
+
+@media(max-width:900px){
+  nav { padding:0 20px; }
+  .nav-right .nav-link { display:none; }
+  .hero-content { padding:0 0 0 24px; }
+  .hero-spider { height:72%; right:-4%; }
+  .hero-num { display:none; }
+  .s-manifesto { grid-template-columns:1fr; padding:80px 24px; gap:48px; }
+  .manifesto-right { display:none; }
+  .pillars-head { flex-direction:column; align-items:flex-start; gap:16px; padding:60px 24px 40px; }
+  .pillars-head-sub { text-align:left; }
+  .pgrid { grid-template-columns:1fr; }
+  .pillar { border-right:none; border-bottom:1px solid var(--line); padding:40px 28px; }
+  .s-cta { padding:100px 24px; }
+  .cta-form { flex-direction:column; }
+  .cta-form input { border-right:1px solid rgba(242,242,240,0.14); border-bottom:none; border-radius:2px 2px 0 0; }
+  .cta-form button { border-radius:0 0 2px 2px; }
+  footer { flex-direction:column; gap:16px; text-align:center; padding:36px 24px; }
+  .scroll-hint { display:none; }
+}
+@media(max-width:580px){
+  .hero-title { font-size:3.8rem; }
+  .hero-content { padding:0 20px; max-width:100%; }
+  .hero-spider { height:55%; opacity:0.35; right:0; }
+  .hero-form { flex-direction:column; }
+  .hero-form input { border-right:1px solid rgba(242,242,240,0.14); border-bottom:none; border-radius:2px 2px 0 0; }
+  .hero-form button { border-radius:0 0 2px 2px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">X<em>SPIDER</em>.CO</a>
+  <div class="nav-right">
+    <a href="#manifesto" class="nav-link">Manifiesto</a>
+    <a href="#comunidad" class="nav-link">Comunidad</a>
+    <button class="nav-btn" onclick="document.getElementById('cta').scrollIntoView({behavior:'smooth'})">Unirme →</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <img src="spiderman.jpeg" alt="xspider" class="hero-spider" onerror="this.style.display='none'">
+  <div class="hero-fade"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">🕷️ Newsletter de emprendimiento</p>
+    <h1 class="hero-title">
+      NADIE<br>
+      <span class="ol">SABE</span><br>
+      <span class="red">QUIÉN SOY.</span><br>
+      Y ESO<br>
+      <span class="ol">ES EL</span><br>
+      <span class="red">PODER.</span>
+    </h1>
+    <p class="hero-sub">
+      Cada semana comparto <strong>lo que nadie te dice</strong> sobre construir un negocio desde cero. Sin cara. Sin filtros. Solo estrategia real de alguien que lo está viviendo.
+    </p>
+    <div class="hero-form" id="h-form">
+      <input type="email" id="h-email" placeholder="tu@email.com">
+      <button onclick="sub('h-email','h-suc','h-form')">ENTRAR 🕷️</button>
+    </div>
+    <p class="form-note">Zero spam. Solo valor. Sal cuando quieras.</p>
+    <p class="hero-success" id="h-suc">🕷️ BIENVENIDO A LA RED.</p>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="sh-line"></div>
+    <span>Scroll</span>
+  </div>
+  <div class="hero-num">XSPIDER.CO — 001</div>
+</section>
+
+<div class="marquee">
+  <div class="mtrack">
+    <span>BUILD IN THE DARK</span><span class="dot">·</span>
+    <span>CONSTRUYE EN SILENCIO</span><span class="dot">·</span>
+    <span>ENTREGA EN VOZ ALTA</span><span class="dot">·</span>
+    <span>XSPIDER.CO</span><span class="dot">·</span>
+    <span>SIN CARA. SIN EXCUSAS.</span><span class="dot">·</span>
+    <span>BUILD IN THE DARK</span><span class="dot">·</span>
+    <span>CONSTRUYE EN SILENCIO</span><span class="dot">·</span>
+    <span>ENTREGA EN VOZ ALTA</span><span class="dot">·</span>
+    <span>XSPIDER.CO</span><span class="dot">·</span>
+    <span>SIN CARA. SIN EXCUSAS.</span><span class="dot">·</span>
+  </div>
+</div>
+
+<section id="manifesto">
+  <div class="s-manifesto">
+    <div>
+      <span class="manifesto-tag">// El manifiesto</span>
+      <h2 class="manifesto-title">
+        LA MÁSCARA<br>
+        <span class="red">ES EL</span><br>
+        MENSAJE.
+      </h2>
+      <p class="manifesto-body">
+        El mundo está lleno de personas que muestran todo y construyen poco. Yo hice lo contrario: <strong>oculté la cara y mostré los resultados.</strong>
+        <br><br>
+        No necesitas saber quién soy. Necesitas saber que <strong>esto funciona.</strong> Emprendimiento real, desde las trincheras, sin adornos.
+      </p>
+      <div class="manifesto-quote">
+        "Nadie te va a rescatar.<br>Tú eres el rescate."
+      </div>
+    </div>
+    <div>
+      <div class="manifesto-img-wrap">
+        <img src="IMG_9108.jpeg" alt="xspider founder" onerror="this.parentElement.style.display='none'">
+        <div class="manifesto-badge">BUILD<br>DIFFER<br>ENT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s-pillars" id="comunidad">
+  <div class="pillars-head">
+    <h2 class="pillars-head-title">Lo que<br>encontrarás aquí</h2>
+    <p class="pillars-head-sub">Cada pieza está diseñada para que construyas más rápido y con más claridad.</p>
+  </div>
+  <div class="pgrid">
+    <div class="pillar"><div class="pn">01</div><div class="pi">⚡</div><div class="pt">Conocimiento real</div><p class="pb">Nada de teoría. Tácticas de alguien que las aplica ahora mismo, no desde un libro.</p></div>
+    <div class="pillar"><div class="pn">02</div><div class="pi">🕸️</div><div class="pt">Comunidad real</div><p class="pb">Conecta con emprendedores serios. La red crece contigo. Aprende, comparte, colabora sin ruido.</p></div>
+    <div class="pillar"><div class="pn">03</div><div class="pi">🖤</div><div class="pt">Acceso exclusivo</div><p class="pb">Lo que no se dice en redes. Recursos y lo que está construyendo XSPIDER — directo a tu inbox.</p></div>
+  </div>
+</section>
+
+<section class="s-cta" id="cta">
+  <svg class="wd wd-tl" viewBox="0 0 400 400" fill="none"><g stroke="white" stroke-width="0.8"><line x1="0" y1="0" x2="400" y2="400"/><line x1="0" y1="0" x2="0" y2="400"/><line x1="0" y1="0" x2="400" y2="0"/><line x1="0" y1="0" x2="280" y2="400"/><line x1="0" y1="0" x2="400" y2="280"/><circle cx="0" cy="0" r="80"/><circle cx="0" cy="0" r="160"/><circle cx="0" cy="0" r="240"/><circle cx="0" cy="0" r="320"/><circle cx="0" cy="0" r="400"/></g></svg>
+  <svg class="wd wd-br" viewBox="0 0 400 400" fill="none"><g stroke="white" stroke-width="0.8"><line x1="0" y1="0" x2="400" y2="400"/><line x1="0" y1="0" x2="0" y2="400"/><line x1="0" y1="0" x2="400" y2="0"/><line x1="0" y1="0" x2="280" y2="400"/><line x1="0" y1="0" x2="400" y2="280"/><circle cx="0" cy="0" r="80"/><circle cx="0" cy="0" r="160"/><circle cx="0" cy="0" r="240"/><circle cx="0" cy="0" r="320"/><circle cx="0" cy="0" r="400"/></g></svg>
+
+  <span class="cta-tag">// Únete ahora · Plazas limitadas</span>
+  <h2 class="cta-title">¿ESTÁS<br><span class="red">CONSTRUYENDO</span><br>EN SILENCIO?</h2>
+  <p class="cta-sub">Entonces esto es para ti. Entra antes de que la red se llene.</p>
+  <div class="cta-form" id="cta-form">
+    <input type="email" id="c-email" placeholder="tu@email.com">
+    <button onclick="sub('c-email','c-suc','cta-form')">🕷️ UNIRME</button>
+  </div>
+  <p class="cta-note">// zero spam · solo valor · sal cuando quieras</p>
+  <p class="cta-success" id="c-suc">🕷️ BIENVENIDO. ESTÁS DENTRO DE LA RED.</p>
+</section>
+
+<footer>
+  <a href="#" class="flogo">X<em>SPIDER</em>.CO</a>
+  <p class="fcopy">BUILD IN THE DARK · DELIVER IN THE LIGHT<br>© 2025 XSPIDER.CO — ALL RIGHTS RESERVED</p>
+  <a href="https://instagram.com/xspider.co" class="fig" target="_blank">@XSPIDER.CO ↗</a>
+</footer>
+
+<script>
+
+function sub(inputId, successId, formId) {
+  const input = document.getElementById(inputId);
+  const success = document.getElementById(successId);
+  const form = document.getElementById(formId);
+  if (!input.value.trim() || !input.value.includes('@')) {
+    input.style.borderColor = 'rgba(217,4,41,0.8)';
+    input.placeholder = 'email válido, por favor';
+    setTimeout(() => { input.style.borderColor = 'rgba(242,242,240,0.14)'; input.placeholder = 'tu@email.com'; }, 2500);
+    return;
+  }
+  form.style.transition = 'all 0.4s'; form.style.opacity = '0'; form.style.transform = 'translateY(-8px)';
+  setTimeout(() => { form.style.display = 'none'; success.style.display = 'block'; }, 400);
+}
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => {
+        e.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)';
+      }, i * 120);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.pillar').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
