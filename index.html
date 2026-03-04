@@ -62,6 +62,212 @@ nav::before{content:'';position:absolute;inset:0;background:linear-gradient(180d
   nav{padding:0 20px;height:60px}
   .nav-btn{padding:9px 16px;font-size:.8rem;letter-spacing:2px}
 
+  /* Hero: columna vertical, todo en orden */
+  .hero{
+    height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    overflow:hidden;
+    position:relative;
+  }
+
+  /* Spider: fondo absoluto, ocupa todo, oscurecido */
+  .spider{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center top;
+    opacity:1;
+    z-index:1;
+  }
+
+  /* Overlay negro fuerte sobre imagen */
+  .fade{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:rgba(6,6,8,0.78);
+  }
+
+  /* Glow y side label fuera */
+  .glow{display:none}
+  .side-label{display:none}
+
+  /* Contenido: z-index alto, flex column, ocupa todo el espacio */
+  .content{
+    position:relative;
+    z-index:5;
+    width:100%;
+    max-width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:80px 24px 0;
+    gap:0;
+  }
+
+  .eyebrow{
+    font-size:.62rem;
+    margin-bottom:14px;
+    letter-spacing:4px;
+    opacity:1;
+    animation:fu .7s .3s both;
+  }
+
+  /* Headline compacto — 2 líneas */
+  .title{
+    font-size:clamp(2.4rem,10vw,3.2rem);
+    margin-bottom:16px;
+    line-height:.92;
+    text-shadow:0 2px 12px rgba(0,0,0,0.9);
+    opacity:1;
+    animation:fu .8s .4s both;
+  }
+  .title .r{
+    color:var(--red);
+    -webkit-text-stroke:0;
+    text-shadow:0 0 20px rgba(0,0,0,0.8);
+  }
+
+  /* Subheadline visible en móvil */
+  .sub{
+    display:block;
+    font-size:.85rem;
+    margin-bottom:24px;
+    max-width:100%;
+    opacity:1;
+    animation:fu .8s .5s both;
+    text-shadow:0 1px 8px rgba(0,0,0,0.9);
+  }
+
+  /* Form mejorado */
+  .form{
+    position:relative;
+    flex-direction:column;
+    max-width:100%;
+    margin-bottom:8px;
+    opacity:1;
+    animation:fu .8s .6s both;
+    gap:0;
+  }
+  .form input{
+    height:56px;
+    border:1px solid rgba(242,242,240,.2);
+    border-bottom:none;
+    border-right:1px solid rgba(242,242,240,.2);
+    border-radius:8px 8px 0 0;
+    padding:0 18px;
+    font-size:.9rem;
+    background:rgba(0,0,0,0.6);
+  }
+  .form button{
+    height:56px;
+    border-radius:0 0 8px 8px;
+    padding:0 18px;
+    font-size:1rem;
+  }
+
+  .note{
+    position:relative;
+    bottom:auto;
+    text-align:left;
+    padding:0;
+    font-size:.62rem;
+    opacity:.35;
+    animation:none;
+    z-index:auto;
+  }
+}
+
+@media(max-width:390px){
+  .title{font-size:2.1rem}
+  .content{padding:72px 20px 0}
+}
+
+/* Title span control */
+.mobile-title{display:none}
+.desktop-title{display:block}
+@media(max-width:768px){
+  .mobile-title{display:block}
+  .desktop-title{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">X<em>SPIDER</em>.CO</a>
+  <button class="nav-btn" onclick="document.getElementById('hemail').focus()">UNIRME &rarr;</button>
+</nav>
+
+<section class="hero">
+  <div class="glow"></div>
+  <img src="spider4.jpeg" alt="xspider" class="spider" onerror="this.style.opacity='0'">
+  <div class="fade"></div>
+  <div class="content">
+    <p class="eyebrow">Newsletter de emprendimiento</p>
+    <h1 class="title">
+      <span class="desktop-title">NADIE<br><span class="ol">SABE</span><br><span class="r">QUIEN SOY.</span><br>Y ESO<br><span class="ol">ES EL</span><br><span class="r">PODER.</span></span>
+      <span class="mobile-title">NADIE <span class="ol">SABE</span> <span class="r">QUIEN SOY.</span><br>Y ESO <span class="ol">ES EL</span> <span class="r">PODER.</span></span>
+    </h1>
+    <p class="sub">Cada semana comparto <strong>lo que nadie te dice</strong> sobre construir un negocio desde cero. Sin cara. Sin filtros. Solo estrategia real.</p>
+    <div class="form" id="hform">
+      <input type="email" id="hemail" placeholder="tu@email.com">
+      <button onclick="sub()">ENTRAR &rarr;</button>
+    </div>
+    <p class="note">Zero spam &middot; Solo valor &middot; Sal cuando quieras</p>
+    <p class="success" id="hsuc">BIENVENIDO A LA RED.</p>
+  </div>
+  <div class="side-label">XSPIDER.CO &mdash; BUILD IN THE DARK</div>
+</section>
+
+<script>
+function sub(){
+  var i=document.getElementById('hemail'),s=document.getElementById('hsuc'),f=document.getElementById('hform');
+  if(!i.value.trim()||i.value.indexOf('@')===-1){
+    i.style.borderColor='rgba(217,4,41,.8)';
+    i.placeholder='email valido, por favor';
+    setTimeout(function(){i.style.borderColor='rgba(242,242,240,.16)';i.placeholder='tu@email.com';},2500);
+    return;
+  }
+  f.style.transition='all .4s';f.style.opacity='0';f.style.transform='translateY(-8px)';
+  setTimeout(function(){f.style.display='none';s.style.display='block';},400);
+}
+document.getElementById('hemail').addEventListener('keydown',function(e){if(e.key==='Enter')sub();});
+</script>
+</body>
+</html>.sub{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:360px;margin-bottom:30px;opacity:0;animation:fu .8s .65s both}
+.sub strong{color:rgba(242,242,240,.88);font-weight:500}
+.form{display:flex;max-width:410px;margin-bottom:10px;opacity:0;animation:fu .8s .8s both}
+.form input{flex:1;background:rgba(242,242,240,.07);border:1px solid rgba(242,242,240,.16);border-right:none;color:var(--white);padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;border-radius:2px 0 0 2px;transition:border-color .3s}
+.form input:focus{border-color:rgba(217,4,41,.65)}
+.form input::placeholder{color:rgba(242,242,240,.28)}
+.form button{background:var(--red);color:var(--white);border:none;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:0 2px 2px 0;white-space:nowrap;transition:background .2s}
+.form button:hover{background:var(--red2)}
+.note{font-size:.67rem;color:rgba(242,242,240,.2);letter-spacing:1px;opacity:0;animation:fu .8s .95s both}
+.success{display:none;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:4px;color:var(--red);margin-top:14px}
+.side-label{position:absolute;right:44px;bottom:32px;z-index:3;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.58rem;letter-spacing:3px;color:rgba(242,242,240,.12);writing-mode:vertical-rl}
+@keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+
+/* TABLET */
+@media(max-width:1024px) and (min-width:769px){
+  nav{padding:0 36px}
+  .content{width:54%;padding-left:36px}
+  .spider{width:55%}
+  .title{font-size:clamp(2.8rem,4.5vw,4.5rem)}
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:768px){
+  body{overflow:hidden}
+
+  nav{padding:0 20px;height:60px}
+  .nav-btn{padding:9px 16px;font-size:.8rem;letter-spacing:2px}
+
   /* Hero ocupa todo el viewport */
   .hero{
     height:100svh;
