@@ -19,120 +19,150 @@ nav::before{content:'';position:absolute;inset:0;background:linear-gradient(180d
 .nav-btn{background:var(--red);color:var(--white);border:none;padding:11px 26px;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:background .2s;flex-shrink:0}
 .nav-btn:hover{background:var(--red2)}
 
-/* HERO */
+/* HERO — DESKTOP */
 .hero{position:relative;width:100vw;height:100vh;overflow:hidden;display:flex;align-items:center}
-
-/* Spider image */
 .spider{position:absolute;right:0;top:0;height:100%;width:62%;object-fit:cover;object-position:center top;z-index:1}
-
-/* Glow */
 .glow{position:absolute;right:18%;top:50%;transform:translateY(-50%);width:52vw;height:90vh;background:radial-gradient(ellipse,rgba(180,30,10,0.18) 0%,transparent 65%);z-index:0;pointer-events:none;animation:gp 5s ease-in-out infinite}
 @keyframes gp{0%,100%{opacity:.5}50%{opacity:.9}}
-
-/* Fade */
 .fade{position:absolute;inset:0;z-index:2;pointer-events:none;
   background:
     linear-gradient(to right,#060608 0%,rgba(6,6,8,.92) 28%,rgba(6,6,8,.15) 52%,rgba(6,6,8,.45) 78%,#060608 100%),
     linear-gradient(to bottom,rgba(6,6,8,.65) 0%,transparent 16%,transparent 80%,#060608 100%)}
-
-/* Content — padding-top = nav height (70px) + extra space */
 .content{position:relative;z-index:3;padding:0 0 0 52px;width:48%;max-width:540px;display:flex;flex-direction:column;justify-content:center;height:100%;padding-top:70px}
-
 .eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:5px;color:var(--red);text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:12px;opacity:0;animation:fu .7s .4s both}
 .eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--red)}
-
 .title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(3.4rem,5.2vw,6rem);line-height:.88;letter-spacing:-1px;text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fu .8s .5s both}
 .title .ol{-webkit-text-stroke:1.5px var(--white);color:transparent}
 .title .r{color:var(--red)}
-
 .sub{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:360px;margin-bottom:30px;opacity:0;animation:fu .8s .65s both}
 .sub strong{color:rgba(242,242,240,.88);font-weight:500}
-
 .form{display:flex;max-width:410px;margin-bottom:10px;opacity:0;animation:fu .8s .8s both}
 .form input{flex:1;background:rgba(242,242,240,.07);border:1px solid rgba(242,242,240,.16);border-right:none;color:var(--white);padding:14px 18px;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;border-radius:2px 0 0 2px;transition:border-color .3s}
 .form input:focus{border-color:rgba(217,4,41,.65)}
 .form input::placeholder{color:rgba(242,242,240,.28)}
 .form button{background:var(--red);color:var(--white);border:none;padding:14px 22px;font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:0 2px 2px 0;white-space:nowrap;transition:background .2s}
 .form button:hover{background:var(--red2)}
-
 .note{font-size:.67rem;color:rgba(242,242,240,.2);letter-spacing:1px;opacity:0;animation:fu .8s .95s both}
 .success{display:none;font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:4px;color:var(--red);margin-top:14px}
-
 .side-label{position:absolute;right:44px;bottom:32px;z-index:3;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.58rem;letter-spacing:3px;color:rgba(242,242,240,.12);writing-mode:vertical-rl}
-
 @keyframes fu{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
 
-/* TABLET iPad (768–1024px) */
+/* TABLET */
 @media(max-width:1024px) and (min-width:769px){
   nav{padding:0 36px}
   .content{width:54%;padding-left:36px}
-  .spider{width:55%;object-position:center top}
+  .spider{width:55%}
   .title{font-size:clamp(2.8rem,4.5vw,4.5rem)}
 }
 
-/* MOBILE (max 768px) */
+/* ===== MOBILE ===== */
 @media(max-width:768px){
-  body{overflow-y:auto}
+  body{overflow:hidden}
 
   nav{padding:0 20px;height:60px}
   .nav-btn{padding:9px 16px;font-size:.8rem;letter-spacing:2px}
 
+  /* Hero ocupa todo el viewport */
   .hero{
     height:100svh;
-    min-height:100svh;
-    align-items:stretch;
     display:flex;
     flex-direction:column;
+    align-items:stretch;
+    overflow:hidden;
   }
 
-  /* Spider — posicionado en la mitad inferior */
+  /* Spider — bloque central, sin opacidad, imagen real */
   .spider{
+    position:relative;
     width:100%;
-    height:50%;
+    height:auto;
     top:auto;
-    bottom:0;
+    right:auto;
+    flex:1;
+    object-fit:cover;
     object-position:center top;
-    opacity:.45;
+    opacity:1;
     z-index:1;
+    min-height:0;
   }
 
-  /* Fade móvil — protege texto arriba, se funde abajo */
+  /* Fade solo arriba (para que no tape la imagen) y abajo suave */
   .fade{
     background:
       linear-gradient(180deg,
-        rgba(6,6,8,.85) 0%,
-        rgba(6,6,8,.5) 30%,
-        rgba(6,6,8,.2) 55%,
-        rgba(6,6,8,.7) 85%,
-        #060608 100%)
+        rgba(6,6,8,1) 0%,
+        rgba(6,6,8,.4) 18%,
+        transparent 35%,
+        transparent 70%,
+        rgba(6,6,8,.6) 88%,
+        rgba(6,6,8,.9) 100%)
   }
 
-  /* Content — ocupa parte superior, centrado verticalmente en su mitad */
+  /* Glow fuera en móvil */
+  .glow{display:none}
+  .side-label{display:none}
+
+  /* Texto arriba — compacto */
   .content{
+    position:absolute;
+    top:0; left:0; right:0;
+    z-index:4;
     width:100%;
     max-width:100%;
     height:auto;
-    padding:80px 22px 30px;
+    padding:68px 22px 0;
     justify-content:flex-start;
-    flex:1;
+    flex-direction:column;
   }
 
-  .eyebrow{font-size:.63rem;margin-bottom:12px;letter-spacing:4px}
-  .title{font-size:clamp(2.6rem,11vw,3.6rem);margin-bottom:14px}
-  .sub{font-size:.86rem;margin-bottom:22px;max-width:100%}
+  .eyebrow{font-size:.62rem;margin-bottom:10px;letter-spacing:4px}
+  .title{font-size:clamp(2.4rem,10vw,3.2rem);margin-bottom:10px;line-height:.9}
+  .sub{font-size:.83rem;margin-bottom:0;max-width:100%;display:none}
 
-  /* Form apilado */
-  .form{flex-direction:column;max-width:100%;margin-bottom:8px}
-  .form input{border-right:1px solid rgba(242,242,240,.16);border-bottom:none;border-radius:2px 2px 0 0;padding:14px 16px}
-  .form button{border-radius:0 0 2px 2px;padding:14px;text-align:center;justify-content:center}
+  /* Form — pegado al fondo */
+  .form{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    z-index:10;
+    flex-direction:column;
+    max-width:100%;
+    margin:0;
+    opacity:1;
+    animation:none;
+    background:rgba(6,6,8,.95);
+    padding:16px 20px 32px;
+    border-top:1px solid rgba(242,242,240,.08);
+  }
+  .form input{
+    border-right:1px solid rgba(242,242,240,.16);
+    border-bottom:none;
+    border-radius:2px 2px 0 0;
+    padding:14px 16px;
+    font-size:.9rem;
+  }
+  .form button{
+    border-radius:0 0 2px 2px;
+    padding:14px;
+    font-size:1rem;
+  }
 
-  .side-label,.glow{display:none}
+  /* Note y success dentro del form fijo */
+  .note{
+    position:fixed;
+    bottom:6px; left:0; right:0;
+    text-align:center;
+    z-index:11;
+    padding:0 20px;
+    font-size:.6rem;
+    opacity:.4;
+    animation:none;
+  }
+  .success{margin-top:0;padding:10px 20px 0;font-size:1rem}
 }
 
-/* iPhone SE / pequeños (max 390px) */
 @media(max-width:390px){
-  .title{font-size:2.4rem}
-  .content{padding:74px 18px 24px}
+  .title{font-size:2.2rem}
+  .content{padding:66px 18px 0}
 }
 </style>
 </head>
@@ -147,7 +177,6 @@ nav::before{content:'';position:absolute;inset:0;background:linear-gradient(180d
   <div class="glow"></div>
   <img src="spider3.jpeg" alt="xspider" class="spider" onerror="this.style.opacity='0'">
   <div class="fade"></div>
-
   <div class="content">
     <p class="eyebrow">Newsletter de emprendimiento</p>
     <h1 class="title">
@@ -166,7 +195,6 @@ nav::before{content:'';position:absolute;inset:0;background:linear-gradient(180d
     <p class="note">Zero spam &middot; Solo valor &middot; Sal cuando quieras</p>
     <p class="success" id="hsuc">BIENVENIDO A LA RED.</p>
   </div>
-
   <div class="side-label">XSPIDER.CO &mdash; BUILD IN THE DARK</div>
 </section>
 
