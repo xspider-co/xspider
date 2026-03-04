@@ -35,12 +35,12 @@ nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 52px; heigh
 .hero-glow { position:absolute; right:5%; bottom:0; width:580px; height:580px; background:radial-gradient(circle,rgba(217,4,41,0.2) 0%,transparent 70%); z-index:1; pointer-events:none; animation:glowpulse 4s ease-in-out infinite; }
 @keyframes glowpulse { 0%,100%{opacity:0.7;transform:scale(1);} 50%{opacity:1;transform:scale(1.07);} }
 
-.hero-spider { position:absolute; right:0; bottom:0; height:96%; width:auto; object-fit:contain; object-position:bottom right; z-index:3; filter:contrast(1.05); animation:spiderIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
+.hero-spider { position:absolute; right:0; bottom:0; height:88%; width:48%; object-fit:contain; object-position:bottom center; z-index:3; filter:contrast(1.05); animation:spiderIn 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s both; }
 @keyframes spiderIn { from{opacity:0;transform:translateX(60px);} to{opacity:1;transform:translateX(0);} }
 
-.hero-fade { position:absolute; inset:0; z-index:4; pointer-events:none; background:linear-gradient(to right,#060608 0%,rgba(6,6,8,0.88) 30%,rgba(6,6,8,0.08) 58%,rgba(6,6,8,0.55) 82%,#060608 100%),linear-gradient(to top,#060608 0%,transparent 20%); }
+.hero-fade { position:absolute; inset:0; z-index:4; pointer-events:none; background:linear-gradient(to right,#060608 0%,rgba(6,6,8,0.8) 25%,rgba(6,6,8,0.0) 50%,rgba(6,6,8,0.2) 75%,#060608 100%),linear-gradient(to top,#060608 0%,transparent 18%); }
 
-.hero-content { position:relative; z-index:6; padding:0 0 0 52px; max-width:620px; }
+.hero-content { position:relative; z-index:6; padding:0 0 0 52px; max-width:50%; }
 .hero-eyebrow { font-family:'Barlow Condensed',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:5px; color:var(--red); text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:12px; opacity:0; animation:fadeUp 0.7s 0.4s both; }
 .hero-eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--red); }
 
@@ -134,7 +134,7 @@ footer { padding:44px 52px; display:flex; align-items:center; justify-content:sp
   nav { padding:0 20px; }
   .nav-right .nav-link { display:none; }
   .hero-content { padding:0 0 0 24px; }
-  .hero-spider { height:72%; right:-4%; }
+  .hero-spider { height:65%; width:50%; right:0; }
   .hero-num { display:none; }
   .s-manifesto { grid-template-columns:1fr; padding:80px 24px; gap:48px; }
   .manifesto-right { display:none; }
@@ -150,9 +150,9 @@ footer { padding:44px 52px; display:flex; align-items:center; justify-content:sp
   .scroll-hint { display:none; }
 }
 @media(max-width:580px){
-  .hero-title { font-size:3.8rem; }
-  .hero-content { padding:0 20px; max-width:100%; }
-  .hero-spider { height:55%; opacity:0.35; right:0; }
+  .hero-title { font-size:2.8rem; line-height:0.9; }
+  .hero-content { padding:100px 20px 0; max-width:100%; }
+  .hero-spider { height:50%; width:55%; opacity:0.25; right:0; bottom:0; }
   .hero-form { flex-direction:column; }
   .hero-form input { border-right:1px solid rgba(242,242,240,0.14); border-bottom:none; border-radius:2px 2px 0 0; }
   .hero-form button { border-radius:0 0 2px 2px; }
