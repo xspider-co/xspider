@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'api-key': process.env.BREVO_API
+        'api-key': process.env.BREVO_API_KEY
       },
       body: JSON.stringify({ email, listIds: [5], updateEnabled: true })
     });
